@@ -15,9 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import re_path
 from boards import views
+from accounts import views as accounts_views
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
+    path('',views.home, name='home'),
+    re_path('signup/$', accounts_views.signup, name='signup'),
+    #LoginView直接查找template_name为login.html的页面
+    re_path('login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    re_path('logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    re_path('boards/(?P<pk>\d+)/$', views.board_topics, name='board_topics'),
+    re_path(r'^boards/(?P<pk>\d+)/new/$', views.new_topic, name='new_topic'),
     path('admin/', admin.site.urls),
-    path('',views.home),
+
 ]

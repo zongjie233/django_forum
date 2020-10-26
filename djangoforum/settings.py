@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'boards',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[
     BASE_DIR, "static",
 ]
+
+#退出后的重定向跳转页面
+LOGOUT_REDIRECT_URL = 'home'
+#登录成功后重定向页面
+LOGIN_REDIRECT_URL = 'home'
