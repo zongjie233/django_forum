@@ -1,10 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
-from .views import home, board_topics, new_topic
+from ..views import home, board_topics, new_topic
 from django.urls import resolve
 from django.contrib.auth.models import User
-from .models import Board, Topic, Post
-from .forms import NewTopicForm
+from ..models import Board, Topic, Post
+from ..forms import NewTopicForm
 
 # Create your tests here.
 # class HomeTests(TestCase): #测试请求url后返回的相应状态码，200意味成功

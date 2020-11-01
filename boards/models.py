@@ -22,7 +22,13 @@ class Post(models.Model):
     message = models.TextField(max_length=4000)
     topic = models.ForeignKey(Topic, related_name='posts',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True,null=True)
     created_by = models.ForeignKey(User, related_name='posts',on_delete=models.CASCADE)
-    updated_by = models.ForeignKey(User, related_name='+',on_delete=models.CASCADE) #不需要指示关系
+    updated_by = models.ForeignKey(User, related_name='+',null=True,on_delete=models.CASCADE )#不需要指示关系
 
+    def __str__(self):
+        truncated_message = Truncator(self.message)
+        return truncated_message.chars(30)
+
+    def get_message_as_markdown(self):
+        return mark_safe(markdown(self.message, safe_mode='escape'))
