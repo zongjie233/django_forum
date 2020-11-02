@@ -10,12 +10,22 @@ class Board(models.Model): #所有的模型都是django.db.models.Model类的子
     def __str__(self):
         return self.name
 
+    def get_posts_count(self):
+        return Post.objects.filter(topic__board=self).count()
+
+    def get_last_post(self):
+        return Post.objects.filter(topic__board=self).order_by('-created_at').first()
+
 #主题类
 class Topic(models.Model):
     subject = models.CharField(max_length=255)
     last_updated = models.DateField(auto_now_add=True) #返回时间
     board = models.ForeignKey(Board, related_name='topics',on_delete=models.CASCADE) #与Board表建立联系，使用related_name 可以让调用变得更加自然;2.0之后需要显性指定on_delete
     starter = models.ForeignKey(User, related_name='topics',on_delete=models.CASCADE)
+    views = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.subject
 
 #帖子类
 class Post(models.Model):
@@ -32,3 +42,4 @@ class Post(models.Model):
 
     def get_message_as_markdown(self):
         return mark_safe(markdown(self.message, safe_mode='escape'))
+
