@@ -8,7 +8,6 @@ from .forms import PostForm
 from django.db.models import Count
 
 
-
 # Create your views here.
 def home(request):
     boards = Board.objects.all()
